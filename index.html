@@ -11,8 +11,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Raleway', sans-serif;
-            background: #f5f0eb;
-            color: #4a2c2a;
+            background: #f5f7fb;
+            color: #0a2b3a;
             overflow: hidden;
             height: 100vh;
         }
@@ -45,8 +45,8 @@
             z-index: 10;
         }
         .slide::-webkit-scrollbar { width: 6px; }
-        .slide::-webkit-scrollbar-track { background: #f0e6df; border-radius: 10px; }
-        .slide::-webkit-scrollbar-thumb { background: #a0714f; border-radius: 10px; }
+        .slide::-webkit-scrollbar-track { background: #eef2f8; border-radius: 10px; }
+        .slide::-webkit-scrollbar-thumb { background: #c9a84c; border-radius: 10px; }
         .slide-content {
             max-width: 1200px;
             margin: 0 auto;
@@ -60,7 +60,7 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            border-bottom: 3px solid #a0714f;
+            border-bottom: 3px solid #c9a84c;
             padding-bottom: 0.8rem;
             margin-bottom: 2rem;
         }
@@ -68,17 +68,17 @@
             font-family: 'Cinzel', serif;
             font-size: 1.9rem;
             font-weight: 800;
-            color: #4a2c2a;
+            color: #0a2b3a;
             letter-spacing: -0.3px;
         }
-        .slide-title span { color: #a0714f; }
+        .slide-title span { color: #c9a84c; }
         .slide-number {
-            background: #f0e6df;
+            background: #eef2f8;
             padding: 0.3rem 1rem;
             border-radius: 50px;
             font-size: 0.75rem;
             font-weight: 600;
-            color: #a0714f;
+            color: #c9a84c;
         }
         .nav-controls {
             position: fixed;
@@ -92,21 +92,21 @@
             width: 52px;
             height: 52px;
             border-radius: 50%;
-            background: #4a2c2a;
-            color: #f5f0eb;
+            background: #0a2b3a;
+            color: #ffffff;
             border: none;
             cursor: pointer;
             font-size: 1.3rem;
             transition: all 0.25s ease;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        .nav-btn:hover { background: #a0714f; transform: scale(1.05); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+        .nav-btn:hover { background: #c9a84c; transform: scale(1.05); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
         .progress-bar {
             position: fixed;
             bottom: 0;
             left: 0;
             height: 4px;
-            background: linear-gradient(90deg, #a0714f, #c99a6b, #a0714f);
+            background: linear-gradient(90deg, #c9a84c, #e0c060, #c9a84c);
             transition: width 0.3s ease;
             z-index: 100;
         }
@@ -114,41 +114,41 @@
             position: fixed;
             bottom: 1.8rem;
             left: 1.8rem;
-            background: rgba(74,44,42,0.85);
+            background: rgba(10,43,58,0.85);
             backdrop-filter: blur(8px);
             padding: 0.35rem 1.2rem;
             border-radius: 50px;
             font-size: 0.8rem;
             font-weight: 600;
             z-index: 100;
-            color: #f5f0eb;
+            color: #ffffff;
             font-family: 'JetBrains Mono', monospace;
         }
-        h1 { font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 800; margin-bottom: 0.8rem; color: #4a2c2a; }
-        h2 { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; margin: 1rem 0 0.6rem; border-left: 4px solid #a0714f; padding-left: 1rem; color: #4a2c2a; }
-        p { font-size: 1rem; line-height: 1.55; margin-bottom: 0.7rem; color: #5a3a36; }
-        .badge { display: inline-block; background: rgba(160,113,79,0.1); padding: 0.25rem 0.9rem; border-radius: 50px; font-size: 0.7rem; font-weight: 600; color: #a0714f; margin: 0.25rem; border: 1px solid rgba(160,113,79,0.2); }
-        .code-block { background: #f8f4f0; border-left: 4px solid #a0714f; border-radius: 16px; padding: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #4a2c2a; margin: 1rem 0; white-space: pre-wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+        h1 { font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 800; margin-bottom: 0.8rem; color: #0a2b3a; }
+        h2 { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; margin: 1rem 0 0.6rem; border-left: 4px solid #c9a84c; padding-left: 1rem; color: #0a2b3a; }
+        p { font-size: 1rem; line-height: 1.55; margin-bottom: 0.7rem; color: #2c4a5a; }
+        .badge { display: inline-block; background: rgba(201,168,76,0.12); padding: 0.25rem 0.9rem; border-radius: 50px; font-size: 0.7rem; font-weight: 600; color: #c9a84c; margin: 0.25rem; border: 1px solid rgba(201,168,76,0.25); }
+        .code-block { background: #f0f4f8; border-left: 4px solid #c9a84c; border-radius: 16px; padding: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #0a2b3a; margin: 1rem 0; white-space: pre-wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
         .qr-grid { display: flex; flex-wrap: wrap; gap: 1.8rem; justify-content: center; margin: 1.2rem 0; }
-        .qr-card { background: #fefcf8; border-radius: 1.2rem; padding: 1rem; text-align: center; border: 1px solid #e0d4cc; transition: all 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-        .qr-card:hover { transform: translateY(-6px); border-color: #a0714f; box-shadow: 0 12px 24px rgba(0,0,0,0.08); }
+        .qr-card { background: #ffffff; border-radius: 1.2rem; padding: 1rem; text-align: center; border: 1px solid #e2e8f0; transition: all 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+        .qr-card:hover { transform: translateY(-6px); border-color: #c9a84c; box-shadow: 0 12px 24px rgba(0,0,0,0.08); }
         canvas.qr-canvas { width: 110px; height: 110px; display: block; margin: 0 auto; background: white; border-radius: 12px; padding: 5px; }
         .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin: 1rem 0; }
-        .stat-card { background: #fefcf8; border-radius: 1rem; padding: 1.2rem; text-align: center; border: 1px solid #e0d4cc; transition: 0.2s; }
-        .stat-card:hover { border-color: #a0714f; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.8rem 0; background: #fefcf8; border-radius: 16px; overflow: hidden; }
-        th, td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid #e0d4cc; }
-        th { background: #f0e6df; color: #a0714f; font-weight: 700; }
-        footer { margin-top: 1.5rem; text-align: center; font-size: 0.7rem; color: #8b6b5a; }
+        .stat-card { background: #f8fafc; border-radius: 1rem; padding: 1.2rem; text-align: center; border: 1px solid #e2e8f0; transition: 0.2s; }
+        .stat-card:hover { border-color: #c9a84c; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.8rem 0; background: #ffffff; border-radius: 16px; overflow: hidden; }
+        th, td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background: #f0f4f8; color: #c9a84c; font-weight: 700; }
+        footer { margin-top: 1.5rem; text-align: center; font-size: 0.7rem; color: #6c8aac; }
         .hero-stats { display: flex; justify-content: center; gap: 2.5rem; margin: 1.2rem 0; flex-wrap: wrap; }
-        .stat-item { text-align: center; background: rgba(160,113,79,0.05); padding: 0.5rem 1rem; border-radius: 50px; }
-        .stat-number { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 800; color: #a0714f; }
-        .stat-label { font-size: 0.7rem; color: #8b6b5a; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
-        .btn-launch { display: inline-block; padding: 0.7rem 1.8rem; background: linear-gradient(135deg, #a0714f, #c99a6b); color: white; border-radius: 60px; text-decoration: none; font-size: 0.85rem; font-weight: 700; margin-top: 1rem; transition: 0.3s; cursor: pointer; border: none; box-shadow: 0 4px 12px rgba(160,113,79,0.2); }
-        .btn-launch:hover { transform: scale(1.02); box-shadow: 0 8px 20px rgba(160,113,79,0.3); background: linear-gradient(135deg, #c99a6b, #a0714f); }
-        .graph-schema { background: #fefcf8; border-radius: 20px; padding: 1.2rem; text-align: center; margin: 1rem 0; border: 1px solid #e0d4cc; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .stat-item { text-align: center; background: rgba(201,168,76,0.08); padding: 0.5rem 1rem; border-radius: 50px; }
+        .stat-number { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 800; color: #c9a84c; }
+        .stat-label { font-size: 0.7rem; color: #6c8aac; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+        .btn-launch { display: inline-block; padding: 0.7rem 1.8rem; background: linear-gradient(135deg, #c9a84c, #e0c060); color: #0a2b3a; border-radius: 60px; text-decoration: none; font-size: 0.85rem; font-weight: 700; margin-top: 1rem; transition: 0.3s; cursor: pointer; border: none; box-shadow: 0 4px 12px rgba(201,168,76,0.2); }
+        .btn-launch:hover { transform: scale(1.02); box-shadow: 0 8px 20px rgba(201,168,76,0.3); background: linear-gradient(135deg, #e0c060, #c9a84c); }
+        .graph-schema { background: #f8fafc; border-radius: 20px; padding: 1.2rem; text-align: center; margin: 1rem 0; border: 1px solid #e2e8f0; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
         .graph-nodes { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 0.8rem 0; }
-        .graph-node { background: linear-gradient(135deg, #f0e6df, #fefcf8); color: #4a2c2a; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; border: 1px solid #e0d4cc; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+        .graph-node { background: linear-gradient(135deg, #f0f4f8, #ffffff); color: #0a2b3a; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
         @media (max-width: 768px) { .slide-content { padding: 1.2rem; } .slide-title { font-size: 1.3rem; } }
     </style>
 </head>
@@ -174,7 +174,7 @@
         const ctx = canvas.getContext('2d');
         for (let row = 0; row < qr.getModuleCount(); row++) {
             for (let col = 0; col < qr.getModuleCount(); col++) {
-                ctx.fillStyle = qr.isDark(row, col) ? '#a0714f' : '#ffffff';
+                ctx.fillStyle = qr.isDark(row, col) ? '#c9a84c' : '#ffffff';
                 ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
             }
         }
@@ -197,7 +197,7 @@
         { title: "Ch.3 · NP-<span>complet</span> & Cook-Levin", lines: ["Définition : Q est NP-complet si (i) Q ∈ NP et (ii) ∀R ∈ NP, R ≤_p Q (réduction polynomiale).", "Théorème de Cook-Levin (1971/1973) : SAT (satisfiabilité booléenne) est NP-complet – premier problème démontré dans cette classe.", "Réduction : toute MT non-déterministe peut être simulée par une formule CNF satisfaisable si et seulement si la MTND accepte.", "TSP décisionnel (existe-t-il une tournée de longueur ≤ K ?) est NP-complet – réduction depuis le problème du cycle hamiltonien.", "Conséquence : si un algorithme polynomial existait pour TSP, alors P = NP – bouleversement de l'informatique et de la cryptographie.", "Autres NP-complets célèbres : 3-SAT, Clique, Vertex Cover, Sac à dos, Coloration de graphe."] },
         { title: "Ch.3 · NP-<span>difficile</span>", lines: ["Définition : H est NP-difficile si tout problème de NP se réduit polynomialement à H (∀R ∈ NP, R ≤_p H).", "Contrairement aux NP-complets, H n'est pas nécessairement dans NP – sa vérification peut être difficile ou impossible.", "Exemple typique : la version optimisation du TSP (trouver la tournée de longueur minimale) est NP-difficile.", "La vérification qu'une tournée donnée est optimale est aussi difficile que de trouver l'optimum – aucun certificat polynomial connu.", "Autres exemples : problème de l'arrêt (indécidable donc NP-difficile), problème de la tournée minimale en logistique.", "Diagramme sous hypothèse P ≠ NP : NP-difficile contient NP-complet, lui-même contient NP, qui contient P."] },
         { title: "Ch.4 · Définition du <span>TSP</span>", lines: ["Énoncé : « Étant donné n villes et les distances entre chaque paire, trouver le plus court circuit passant par chaque ville exactement une fois et revenant au point de départ. »", "Formalisation : soit V = {v₁,…,vₙ} et d : V×V → ℝ⁺ une fonction de distance. Trouver la permutation π ∈ Sₙ minimisant :", "L(π) = d(v_π(n), v_π(1)) + Σ_{k=1}^{n-1} d(v_π(k), v_π(k+1)).", "Cycle hamiltonien dans un graphe complet pondéré G = (V, E, w) où w(i,j) = d(vᵢ, vⱼ).", "NP-difficile – pas d'algorithme polynomial connu pour toutes les instances.", "Problème référence de l'optimisation combinatoire, utilisé comme banc d'essai pour toutes les nouvelles méthodes algorithmiques."], schema: "tsp" },
-        { title: "Ch.4 · Explosion <span>combinatoire</span>", lines: ["Nombre de tours possibles pour TSP symétrique : (n-1)!/2.", "n=10 → 181 440 tours (facile). n=15 → ≈ 4,36×10¹⁰ tours (difficile).", "n=20 → 6,08×10¹⁶ tours – à raison d'1 milliard de tours par seconde, plus de 19 ans.", "n=25 → 3,10×10²³ tours – plus d'un million de siècles.", "n=30 → 4,42×10³⁰ tours – supérieur à l'âge de l'univers estimé à 1,38×10¹⁰ ans.", "Enumération exhaustive totalement impossible pour n > 15 – nécessité d'algorithmes intelligents."] },
+        { title: "Ch.4 · Explosion <span>combinatoire</span>", lines: ["Nombre de tours possibles pour TSP symétrique : (n-1)!/2.", "n=10 → 181 440 tours (facile). n=15 → ≈ 4,36×10¹⁰ tours (difficile).", "n=20 → 6,08×10¹⁶ tours – à raison d'1 milliard de tours par seconde, plus de 19 ans.", "n=25 → 3,10×10²³ tours – plus d'un million de siècles.", "n=30 → 4,42×10³⁰ tours – supérieur à l'âge de l'univers estimé à 1,38×10¹⁰ ans.", "Enumeration exhaustive totalement impossible pour n > 15 – nécessité d'algorithmes intelligents."] },
         { title: "Ch.4 · Variantes du <span>TSP</span>", lines: ["Symétrique (sTSP) : w(i,j) = w(j,i) – nombre de tournées (n-1)!/2 – transport routier bidirectionnel.", "Asymétrique (aTSP) : w(i,j) ≠ w(j,i) – routes à sens unique, problèmes d'ordonnancement.", "Métrique : satisfaction de l'inégalité triangulaire w(i,k) ≤ w(i,j)+w(j,k) – distances géographiques.", "Euclidien : villes dans ℝ², distance euclidienne – conception de circuits imprimés (VLSI).", "TSPTW (fenêtres de temps) : chaque ville i doit être visitée dans un intervalle [aᵢ, bᵢ] – livraisons express.", "mTSP : plusieurs voyageurs partent d'un même dépôt – flotte de véhicules, ramassage scolaire.", "PTSP : présence aléatoire des nœuds – modélisation de l'incertitude."] },
         { title: "Ch.5 · Principe de <span>Bellman</span>", lines: ["Richard Bellman (1957) : « Toute politique optimale est composée de sous-politiques optimales. »", "Sous-structure optimale : la solution optimale d'un problème contient les solutions optimales de ses sous-problèmes.", "Chevauchement des sous-problèmes : les mêmes sous-problèmes apparaissent plusieurs fois – la mémorisation (mémoïsation) évite les recalculs.", "Équation de récurrence générale (minimisation) : Vₖ(s) = min_{d∈dₖ(s)} { cₖ(s,d) + Vₖ₊₁(Tₖ(s,d)) } avec condition terminale Vₙ₊₁(s)=0.", "Application au TSP : décomposition par sous-ensembles de villes visités.", "Base de la programmation dynamique, utilisée dans des centaines d'algorithmes d'optimisation."] },
         { title: "Ch.5 · Algorithme de <span>Held-Karp</span> (1962)", lines: ["Définition : dp[S][j] = coût minimal d'un chemin partant de la ville 1, visitant exactement l'ensemble S et se terminant en j ∈ S.", "Cas de base : dp[{1,j}][j] = w(1,j) pour tout j ≠ 1.", "Récurrence : dp[S][j] = min_{i∈S\\{j}} { dp[S\\{j}][i] + w(i,j) } pour |S| ≥ 3.", "Solution finale : L* = min_{j≠1} { dp[V][j] + w(j,1) }.", "Complexité temporelle : O(n²·2ⁿ) – car 2ⁿ⁻¹ sous-ensembles S, pour chaque S on examine n villes j, et pour chaque couple on examine n villes i.", "Complexité spatiale : O(n·2ⁿ) – tableau de taille #S × n (bitmasks).", "Gain spectaculaire : pour n=25, Held-Karp ≈ 2,1×10¹⁰ opérations contre 1,6×10²⁵ pour force brute – gain ×7,6×10¹⁴."] },
