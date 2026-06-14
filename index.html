@@ -149,6 +149,8 @@
         .graph-schema { background: #f8fafc; border-radius: 20px; padding: 1.2rem; text-align: center; margin: 1rem 0; border: 1px solid #e2e8f0; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
         .graph-nodes { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 0.8rem 0; }
         .graph-node { background: linear-gradient(135deg, #f0f4f8, #ffffff); color: #0a2b3a; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+        .chapter-header { margin-bottom: 0.5rem; }
+        .chapter-header .badge { background: #c9a84c20; font-size: 0.8rem; padding: 0.3rem 1.2rem; border-radius: 40px; border: none; }
         @media (max-width: 768px) { .slide-content { padding: 1.2rem; } .slide-title { font-size: 1.3rem; } }
     </style>
 </head>
@@ -160,7 +162,7 @@
         <button class="nav-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
     </div>
     <div class="progress-bar" id="progressBar"></div>
-    <div class="slide-counter" id="slideCounter">Slide 1 / 50</div>
+    <div class="slide-counter" id="slideCounter">Slide 1 / 7</div>
 </div>
 
 <script>
@@ -183,61 +185,88 @@
     }
 
     const slides = [
-        { title: "Optimisation <span>Combinatoire</span>", lines: ["🏛️ Université Abdelmalek Essaâdi – École Normale Supérieure Tétouan", "📖 Projet de Fin d'Études – Licence en Mathématiques", "👥 ER-RTHIMI Sofiane & ER-ROUFFI Ilyas", "📌 Encadré par : Pr. EL HICHAMI Othmane", "🎯 Optimisation Combinatoire appliquée au Problème du Voyageur de Commerce", "📅 Année universitaire 2025–2026"], isCover: true },
-        { title: "Introduction <span>Générale</span>", lines: ["Depuis les travaux pionniers de George Dantzig (1940), l'optimisation combinatoire s'est imposée comme une branche essentielle des mathématiques appliquées.", "Le TSP occupe une place emblématique – pierre angulaire de la discipline, servant de banc d'essai pour toutes les grandes méthodes algorithmiques.", "Première formulation rigoureuse : Dantzig, Fulkerson et Johnson (1954) – résolution d'une instance à 49 villes.", "Miller, Tucker et Zemlin (1960) : reformulation des contraintes d'élimination des sous-tours (SEC) avec un nombre polynomial de contraintes.", "Desrochers et Laporte (1991) ont perfectionné cette approche.", "Notre travail étend le modèle au TSP Probabiliste (PTSP) avec programme mathématique à 2 étapes – une avancée récente (2016+)."] },
-        { title: "Plan du <span>Mémoire</span>", lines: ["Chapitre 1 : Optimisation Combinatoire – définitions formelles, PLNE, programmation stochastique, classification des méthodes.", "Chapitre 2 : Calculabilité & Décidabilité – machines de Turing (1936), thèse de Church-Turing, problème de l'arrêt, théorème de Rice.", "Chapitre 3 : Complexité – classes P, NP, NP-complet, NP-difficile, réduction polynomiale, conjecture P vs NP (prix du millénaire).", "Chapitre 4 : Le Problème du Voyageur de Commerce – définitions, variantes (sTSP, aTSP, métrique, euclidien, TSPTW, mTSP, PTSP).", "Chapitre 5 : Programmation Dynamique – principe d'optimalité de Bellman, algorithme de Held-Karp (1962), complexité O(n²·2ⁿ).", "Chapitre 6 : Méthodes de Résolution – Branch & Bound, Branch & Cut (notre contribution), Christofides (3/2), métaheuristiques (recuit, tabou, AG, ACO).", "Chapitre 7 : Application TSP WORLD PRO – plateforme interactive avec cartographie, GPS, QR codes et algorithmes temps réel."] },
-        { title: "Ch.1 · Optimisation <span>Combinatoire</span>", lines: ["Recherche de l'optimum global parmi un ensemble discret de solutions – un problème fondamental en mathématiques appliquées.", "L'espace de recherche croît exponentiellement avec la dimension n – énumération exhaustive impraticable dès n > 20-30.", "Formellement : Min f(x) / x ∈ S ⊂ {0,1}ⁿ, f : S → ℝ, où S représente l'ensemble des solutions réalisables.", "La programmation linéaire en nombres entiers (PLNE) est un outil puissant pour modéliser ces problèmes.", "La programmation stochastique intègre l'incertitude via des scénarios ou des lois de probabilité – apparue dans les années 50 avec Bellman et Birge.", "L'optimisation combinatoire intervient en finance (gestion de portefeuille), logistique, bioinformatique (séquençage ADN), télécommunications et énergie."] },
-        { title: "Ch.1 · Programmation <span>Linéaire</span>", lines: ["Min f(x) = cᵀx sous contraintes Ax ≤ b, x ≥ 0, où c, x ∈ ℝⁿ, A ∈ ℝᵐˣⁿ.", "Algorithme du Simplex (Dantzig 1947) : parcours des sommets du polyèdre des solutions admissibles – très efficace en pratique malgré une complexité exponentielle dans le pire cas.", "Optimum global = meilleure solution admissible – propriété de convexité garantie pour les PL.", "Utilisé dans l'approche polyédrale pour le TSP : formulation en nombres entiers avec relaxation linéaire.", "Les solveurs comme CPLEX, Gurobi ou OR-Tools implémentent ces algorithmes à très grande échelle.", "La méthode des plans coupants (Gomory) ajoute des contraintes pour renforcer la relaxation."] },
-        { title: "Ch.1 · Programmation <span>Stochastique</span>", lines: ["L'incertitude apparaît dans les années 50 (Bellman, Birge) – modélisation des problèmes où les paramètres sont aléatoires.", "Modèles à 2 étapes : décision ici-et-maintenant (première étape) puis décision wait-and-see après réalisation de l'aléa.", "Scénarios créés à partir d'historiques (ventes, météo) ou générés via des lois de probabilité (normale, uniforme, discrète).", "Objectif : minimiser l'espérance mathématique du coût total : E[f(x, ξ)] où ξ est le vecteur aléatoire.", "Le TSP Probabiliste (PTSP) suppose que chaque nœud i est présent avec probabilité pᵢ (indépendamment).", "La tournée a priori π doit être optimisée pour minimiser le coût espéré : E[L(π)] = Σ_{S⊆V} P(S)·L(π|S)."] },
-        { title: "Ch.2 · <span>Calculabilité</span>", lines: ["Née dans les années 1930 avec les travaux d'Alan Turing, Alonzo Church et Kurt Gödel – réponse à la question : quels problèmes peuvent être résolus par un algorithme ?", "Machine de Turing : modèle universel (ruban infini, tête lecture/écriture, fonction de transition) – capturant toute notion d'algorithme effectif.", "Thèse de Church-Turing : tout ce qui est effectivement calculable est calculable par une machine de Turing – acceptée universellement depuis 1936.", "Un problème est décidable s'il existe une machine de Turing qui s'arrête toujours avec la bonne réponse (oui/non).", "Le TSP est décidable car l'ensemble des tours (n! cycles) est fini – un algorithme naïf les énumère tous.", "Cependant, la décidabilité ne dit rien sur l'efficacité – c'est le rôle de la théorie de la complexité."] },
-        { title: "Ch.2 · Machine de <span>Turing</span>", lines: ["Définition formelle : M = (Q, Σ, Γ, δ, q₀, q_acc, q_rej) où Q est ensemble fini d'états, Σ alphabet d'entrée, Γ alphabet du ruban.", "Fonction de transition : δ : Q × Γ → Q × Γ × {L,R} – lit un symbole, écrit un nouveau symbole, déplace la tête à gauche ou droite.", "Acceptation : si la machine atteint l'état q_acc ; rejet : q_rej. Sinon, elle boucle indéfiniment.", "Exemple classique : reconnaissance du langage {0ⁿ1ⁿ | n ≥ 0} – machine à 4 états qui remplace les 0 par X et les 1 par Y.", "Variantes : MT non-déterministe (MTND), MT à plusieurs rubans, MT universelle (ancêtre des ordinateurs programmables), λ-calcul, fonctions récursives générales – toutes équivalentes en puissance.", "Thèse de Church-Turing : Toutes ces variantes définissent exactement la même classe de fonctions calculables."], schema: "turing" },
-        { title: "Ch.2 · Problème de <span>l'arrêt</span> & Rice", lines: ["HALT = {⟨M,w⟩ : la MT M s'arrête sur l'entrée w}.", "Théorème de Turing (1936) : HALT est indécidable – aucun algorithme ne peut décider si un programme donné s'arrête ou boucle.", "Preuve par diagonalisation : supposer l'existence d'une MT H décidant HALT mène à une contradiction (construction de D qui s'arrête ssi D boucle).", "Théorème de Rice (1953) : Toute propriété non triviale de la fonction calculée par un programme est indécidable.", "Exemples : « Le programme s'arrête-t-il sur l'entrée vide ? », « Le programme et Q calculent-ils la même fonction ? », « Le programme contient-il un bug ? ».", "Conséquence pratique : la vérification complète de programmes (analyse statique) est impossible – les outils modernes (Coverity, PVS-Studio) sont soit incomplets soit conservatifs."] },
-        { title: "Ch.3 · Classe <span>P</span>", lines: ["P (Polynomial Time) : problèmes décidés par un algorithme déterministe en temps O(nᵏ) pour une constante k.", "Formellement : P = ⋃_{k≥1} DTIME(nᵏ).", "Exemples : tri (O(n log n)), plus court chemin (Dijkstra O((V+E)log V)), test de primalité (AKS O((log n)¹²)), programmation linéaire (ellipsoïde, Karmarkar).", "Propriété de robustesse : indépendant du modèle de calcul (MT, RAM, λ-calcul) – un problème dans P le reste sur toute machine raisonnable.", "Considérés comme « faciles » ou « traitables » – même pour n = 10⁶, un algorithme O(n²) effectue 10¹² opérations (quelques minutes sur CPU moderne).", "P ⊆ NP trivialement : si un problème est résoluble en temps polynomial, il est vérifiable en temps polynomial (l'algorithme lui-même est le vérificateur)."] },
-        { title: "Ch.3 · Classe <span>NP</span>", lines: ["NP (Nondeterministic Polynomial) : problèmes dont les solutions sont vérifiables en temps polynomial.", "Formellement : x ∈ L ⇔ ∃ y avec |y| = O(|x|ᵏ) et V(x,y) = 1 – y est appelé certificat ou témoin.", "Certificat pour TSP : une tournée π donnée – vérification en O(n) en additionnant les n distances.", "Exemples : SAT (vérifier une affectation ⇒ O(m)), Sudoku (vérifier une grille complète ⇒ O(n²)), Sac à dos (vérifier un sous-ensemble ⇒ O(n)).", "Résultat fondamental : P ⊆ NP (trivial). La question P = NP ? est la plus célèbre de l'informatique théorique.", "Prix du millénaire (Clay Institute) : 1 000 000 $ pour une démonstration correcte – la plupart des experts pensent P ≠ NP."] },
-        { title: "Ch.3 · NP-<span>complet</span> & Cook-Levin", lines: ["Définition : Q est NP-complet si (i) Q ∈ NP et (ii) ∀R ∈ NP, R ≤_p Q (réduction polynomiale).", "Théorème de Cook-Levin (1971/1973) : SAT (satisfiabilité booléenne) est NP-complet – premier problème démontré dans cette classe.", "Réduction : toute MT non-déterministe peut être simulée par une formule CNF satisfaisable si et seulement si la MTND accepte.", "TSP décisionnel (existe-t-il une tournée de longueur ≤ K ?) est NP-complet – réduction depuis le problème du cycle hamiltonien.", "Conséquence : si un algorithme polynomial existait pour TSP, alors P = NP – bouleversement de l'informatique et de la cryptographie.", "Autres NP-complets célèbres : 3-SAT, Clique, Vertex Cover, Sac à dos, Coloration de graphe."] },
-        { title: "Ch.3 · NP-<span>difficile</span>", lines: ["Définition : H est NP-difficile si tout problème de NP se réduit polynomialement à H (∀R ∈ NP, R ≤_p H).", "Contrairement aux NP-complets, H n'est pas nécessairement dans NP – sa vérification peut être difficile ou impossible.", "Exemple typique : la version optimisation du TSP (trouver la tournée de longueur minimale) est NP-difficile.", "La vérification qu'une tournée donnée est optimale est aussi difficile que de trouver l'optimum – aucun certificat polynomial connu.", "Autres exemples : problème de l'arrêt (indécidable donc NP-difficile), problème de la tournée minimale en logistique.", "Diagramme sous hypothèse P ≠ NP : NP-difficile contient NP-complet, lui-même contient NP, qui contient P."] },
-        { title: "Ch.4 · Définition du <span>TSP</span>", lines: ["Énoncé : « Étant donné n villes et les distances entre chaque paire, trouver le plus court circuit passant par chaque ville exactement une fois et revenant au point de départ. »", "Formalisation : soit V = {v₁,…,vₙ} et d : V×V → ℝ⁺ une fonction de distance. Trouver la permutation π ∈ Sₙ minimisant :", "L(π) = d(v_π(n), v_π(1)) + Σ_{k=1}^{n-1} d(v_π(k), v_π(k+1)).", "Cycle hamiltonien dans un graphe complet pondéré G = (V, E, w) où w(i,j) = d(vᵢ, vⱼ).", "NP-difficile – pas d'algorithme polynomial connu pour toutes les instances.", "Problème référence de l'optimisation combinatoire, utilisé comme banc d'essai pour toutes les nouvelles méthodes algorithmiques."], schema: "tsp" },
-        { title: "Ch.4 · Explosion <span>combinatoire</span>", lines: ["Nombre de tours possibles pour TSP symétrique : (n-1)!/2.", "n=10 → 181 440 tours (facile). n=15 → ≈ 4,36×10¹⁰ tours (difficile).", "n=20 → 6,08×10¹⁶ tours – à raison d'1 milliard de tours par seconde, plus de 19 ans.", "n=25 → 3,10×10²³ tours – plus d'un million de siècles.", "n=30 → 4,42×10³⁰ tours – supérieur à l'âge de l'univers estimé à 1,38×10¹⁰ ans.", "Enumeration exhaustive totalement impossible pour n > 15 – nécessité d'algorithmes intelligents."] },
-        { title: "Ch.4 · Variantes du <span>TSP</span>", lines: ["Symétrique (sTSP) : w(i,j) = w(j,i) – nombre de tournées (n-1)!/2 – transport routier bidirectionnel.", "Asymétrique (aTSP) : w(i,j) ≠ w(j,i) – routes à sens unique, problèmes d'ordonnancement.", "Métrique : satisfaction de l'inégalité triangulaire w(i,k) ≤ w(i,j)+w(j,k) – distances géographiques.", "Euclidien : villes dans ℝ², distance euclidienne – conception de circuits imprimés (VLSI).", "TSPTW (fenêtres de temps) : chaque ville i doit être visitée dans un intervalle [aᵢ, bᵢ] – livraisons express.", "mTSP : plusieurs voyageurs partent d'un même dépôt – flotte de véhicules, ramassage scolaire.", "PTSP : présence aléatoire des nœuds – modélisation de l'incertitude."] },
-        { title: "Ch.5 · Principe de <span>Bellman</span>", lines: ["Richard Bellman (1957) : « Toute politique optimale est composée de sous-politiques optimales. »", "Sous-structure optimale : la solution optimale d'un problème contient les solutions optimales de ses sous-problèmes.", "Chevauchement des sous-problèmes : les mêmes sous-problèmes apparaissent plusieurs fois – la mémorisation (mémoïsation) évite les recalculs.", "Équation de récurrence générale (minimisation) : Vₖ(s) = min_{d∈dₖ(s)} { cₖ(s,d) + Vₖ₊₁(Tₖ(s,d)) } avec condition terminale Vₙ₊₁(s)=0.", "Application au TSP : décomposition par sous-ensembles de villes visités.", "Base de la programmation dynamique, utilisée dans des centaines d'algorithmes d'optimisation."] },
-        { title: "Ch.5 · Algorithme de <span>Held-Karp</span> (1962)", lines: ["Définition : dp[S][j] = coût minimal d'un chemin partant de la ville 1, visitant exactement l'ensemble S et se terminant en j ∈ S.", "Cas de base : dp[{1,j}][j] = w(1,j) pour tout j ≠ 1.", "Récurrence : dp[S][j] = min_{i∈S\\{j}} { dp[S\\{j}][i] + w(i,j) } pour |S| ≥ 3.", "Solution finale : L* = min_{j≠1} { dp[V][j] + w(j,1) }.", "Complexité temporelle : O(n²·2ⁿ) – car 2ⁿ⁻¹ sous-ensembles S, pour chaque S on examine n villes j, et pour chaque couple on examine n villes i.", "Complexité spatiale : O(n·2ⁿ) – tableau de taille #S × n (bitmasks).", "Gain spectaculaire : pour n=25, Held-Karp ≈ 2,1×10¹⁰ opérations contre 1,6×10²⁵ pour force brute – gain ×7,6×10¹⁴."] },
-        { title: "Ch.5 · Implémentation <span>Held-Karp</span>", lines: ["Représentation des sous-ensembles par masques binaires : mask ∈ [0, 2ⁿ-1] où le bit i est 1 si la ville i a été visitée.", "Initialisation : dp[1<<0][0] = 0 (seule la ville 0 (départ) visitée, coût 0).", "Parcours : pour mask de 1 à 2ⁿ-1 (contenant 0), pour chaque j dans mask, pour chaque i dans mask\\{j} :", "dp[mask][j] = min(dp[mask][j], dp[mask^(1<<j)][i] + dist[i][j]).", "Reconstruction du chemin optimal via un tableau parent[mask][j] qui stocke le prédécesseur i.", "Limite pratique : n ≤ 25 sur machine standard, n ≤ 30-35 avec beaucoup de mémoire (car mémoire O(n·2ⁿ) devient critique pour n=30 : 30 × 1e9 ≈ 30 Go)."], code: true },
-        { title: "Ch.6 · Branch & <span>Bound</span>", lines: ["Méthode exacte : diviser l'espace de recherche (branch) + évaluer une borne inférieure (bound) + élaguer (prune).", "Borne inférieure classique pour ATSP : relaxation du problème d'affectation (Assignment Problem – AP).", "Relaxation AP : on cherche une permutation π minimisant Σ c(i,π(i)) – résoluble en O(n³) avec l'algorithme hongrois (Kuhn-Munkres).", "Si la borne inférieure d'un nœud ≥ meilleure solution connue (borne supérieure), on coupe la branche et toute sa descendance.", "Stratégies de parcours : profondeur d'abord (DFS – mémoire faible) ou meilleure borne d'abord (plus efficace en pratique).", "Résout des instances jusqu'à n ≤ 35 en temps raisonnable.", "Algorithme de Little (1963) : une des premières implémentations de B&B pour TSP."] },
-        { title: "Ch.6 · Branch & <span>Cut</span> – Notre contribution", lines: ["Approche exacte standard pour l'ATSP : résoudre la relaxation linéaire (LP) du programme en nombres entiers.", "Contraintes d'élimination des sous-tours (SEC) : uᵢ - uⱼ + n·xᵢⱼ ≤ n-1 pour tout i≠j, i≠1 (formulation MTZ).", "Problème : nombre exponentiel de SEC (2ⁿ) – impossible d'ajouter toutes dès le départ.", "Notre solution : génération dynamique de contraintes (lazy constraints) – on ajoute les SEC uniquement lorsqu'elles sont violées dans la solution courante.", "Algorithme : (1) Résoudre la relaxation LP sans SEC, (2) Si solution fractionnaire contient un sous-tour → ajouter la SEC correspondante, (3) Répéter jusqu'à solution entière.", "Utilisé par Concorde (meilleur solveur TSP) – capable de résoudre des instances à 85 000 villes.", "Notre implémentation en Python avec PuLP/OR-Tools obtient des solutions optimales pour n ≤ 100 sur instances TSPLIB."] },
-        { title: "Ch.6 · Algorithme de <span>Christofides</span>", lines: ["Garantie de performance : 3/2 pour TSP métrique (1976) – la seule approximation à rapport constant simple.", "Étapes détaillées : (1) Construire l'arbre couvrant minimal (MST) avec Prim ou Kruskal – coût L_MST ≤ L*.", "(2) Identifier les sommets de degré impair dans le MST (par le lemme des poignées de main, il y en a un nombre pair).", "(3) Trouver un couplage parfait de poids minimal entre ces sommets de degré impair – coût L_couplage.", "(4) Ajouter les arêtes du couplage au MST → multigraphe eulérien (tous sommets de degré pair).", "(5) Parcourir le cycle eulérien et court-circuiter les sommets répétés (inégalité triangulaire) → cycle hamiltonien.", "Preuve : L_EULER = L_MST + L_couplage ≤ L* + L*/2 = (3/2)·L* d'où le résultat. Complexité O(n³)."] },
-        { title: "Ch.6 · Recuit <span>Simulé</span> (SA)", lines: ["Inspiré du refroidissement des métaux en métallurgie – processus de Metropolis (1953) adapté à l'optimisation par Kirkpatrick (1983).", "Principe : à haute température T, on accepte des solutions moins bonnes avec probabilité e^{-Δ/T} ; T décroît lentement.", "Algorithme : (1) Générer une solution initiale (ex: plus proche voisin). (2) Itérer : générer voisin, calculer Δ = f(s')-f(s). (3) Si Δ<0 accepter, sinon accepter avec probabilité e^{-Δ/T}.", "Paramètres critiques : température initiale T₀ (assez haute pour accepter ~100% des mouvements), taux de décroissance α ∈ [0.8, 0.9999], nombre d'itérations par palier.", "Avantages : échappe aux optima locaux, converge vers l'optimum global lorsque T→0 et itérations→∞, facile à implémenter.", "Inconvénients : réglage empirique des paramètres, temps de calcul potentiellement long, optimalité non garantie.", "Gap typique sur TSPLIB : < 2% pour n = 1000."] },
-        { title: "Ch.6 · Algorithmes <span>Génétiques</span> (GA)", lines: ["Inspirés de l'évolution naturelle – introduits par John Holland (1975).", "Représentation : un chromosome est une permutation des n villes (tournée).", "Sélection : méthode de la roulette ou tournoi – favorise les individus avec meilleure fitness (distance plus courte).", "Croisement (crossover) adapté aux permutations : OX (Order Crossover), PMX (Partially Mapped Crossover), CX (Cycle Crossover).", "Mutation : inversion (2-opt), swap (échange de deux villes), insertion (déplacement d'une ville).", "Paramètres : taille de population (100-500), taux de croisement (0.7-0.9), taux de mutation (0.01-0.1), nombre de générations (500-5000).", "Applications : très efficace pour grandes instances (n > 200) – souvent hybridé avec recherche locale (memetic algorithms)."] },
-        { title: "Ch.6 · Colonies de <span>Fourmis</span> (ACO)", lines: ["Inspiré du comportement des fourmis cherchant de la nourriture – introduit par Marco Dorigo (1992) dans sa thèse.", "Principe : chaque fourmi construit une tournée en se déplaçant de ville en ville avec une probabilité dépendant de la phéromone τᵢⱼ et de l'heuristique ηᵢⱼ = 1/dᵢⱼ.", "Règle de transition : P(i→j) = [τᵢⱼ]^α · [ηᵢⱼ]^β / Σ_{k∈non_visitée} [τᵢₖ]^α · [ηᵢₖ]^β.", "Mise à jour de la phéromone : évaporation (1-ρ)·τᵢⱼ + addition Σ_{fourmis} Δτᵢⱼᵏ où Δτᵢⱼᵏ = Q / Lₖ si l'arête (i,j) est utilisée par la fourmi k.", "Paramètres : α (importance phéromone), β (importance heuristique), ρ (taux évaporation, typiquement 0.1-0.5), Q (constante).", "Très performant sur TSP et problèmes de routage – ACO est l'une des métäheuristiques les plus populaires."] },
-        { title: "Ch.7 · TSP <span>WORLD PRO</span> – Présentation", lines: ["Application web professionnelle d'optimisation TSP développée dans le cadre de notre PFE.", "Fonctionnalités : sélection des villes sur carte interactive Leaflet / OpenStreetMap.", "Algorithmes implémentés : Nearest Neighbor (constructif en O(n²)), 2-OPT (amélioration locale), Held-Karp (exact pour n ≤ 18).", "Géolocalisation GPS : utilisation de l'API navigator.geolocation pour ajouter la position actuelle comme ville de départ.", "Partage instantané : génération dynamique de QR codes pour partager une tournée ou l'application.", "Plus de 5000 lignes de code (HTML/CSS/JS) – déploiement sur Vercel (frontend) et GitHub Pages.", "Lien direct : https://prjet-sofien-iliass.vercel.app/"] },
-        { title: "Ch.7 · Architecture <span>technique</span>", lines: ["Frontend pur HTML5/CSS3/JavaScript – aucune dépendance serveur (tout tourne côté client).", "Bibliothèques utilisées : Leaflet.js (cartes), QRCode-generator (QR codes), FontAwesome (icônes).", "Structure modulaire : algorithmes dans un module séparé (tsp_algorithms.js), interface dans main.js.", "Algorithmes TSP : NearestNeighbor (O(n²)), TwoOpt (amélioration itérative O(n³)), HeldKarp (DP O(n²·2ⁿ) pour n≤18).", "Géolocalisation : récupération des coordonnées GPS via l'API W3C Geolocation – affichage immédiat sur la carte.", "Déploiement : Vercel pour le site principal, GitHub Pages pour la documentation.", "Code open source disponible sur GitHub : github.com/sofiane-iliass/tsp-world-pro"] },
-        { title: "Ch.7 · QR Codes <span>& Accès</span>", lines: ["Trois QR codes intégrés dans la présentation :", "1. Application TSP WORLD PRO : https://prjet-sofien-iliass.vercel.app/", "2. Dépôt GitHub (code source complet) : github.com/sofiane-iliass/tsp-world-pro", "3. Documentation API et présentation : https://prjet-sofien-iliass.vercel.app/presentation", "Scannez pour accéder instantanément depuis votre smartphone – démonstration interactive en temps réel.", "L'application est entièrement responsive (mobile, tablette, desktop) avec une interface intuitive.", "Fonctionne sur tous les navigateurs modernes (Chrome, Firefox, Safari, Edge)."], hasQr: true },
-        { title: "Conclusion & <span>Perspectives</span>", lines: ["Le TSP est NP-complet mais décidable – des algorithmes exacts (Held-Karp, Branch & Cut) résolvent des instances de taille raisonnable.", "Held-Karp : référence exacte pour n ≤ 25 (complexité O(n²·2ⁿ)).", "Branch & Cut : optimal pour instances jusqu'à n = 100-200 (Concorde résout 85 000 villes).", "Métaheuristiques (recuit, AG, ACO) : quasi-optimal (gap < 2%) pour grandes instances (n > 1000).", "Perspectives : Deep Learning (Pointer Networks, Graph Neural Networks) pour apprendre à résoudre le TSP.", "Algorithmes quantiques : QAOA (Quantum Approximate Optimization Algorithm) pour un avantage quantique.", "Extension au PTSP (TSP probabiliste) avec modèles à 2 étapes et scénarios stochastiques.", "Optimisation multi-objectifs : minimiser distance + CO₂ + temps d'attente."] },
-        { title: "Remerciements", lines: ["Pr. EL HICHAMI Othmane – directeur de recherche – pour sa disponibilité sans faille, ses relectures minutieuses et ses conseils éclairés.", "Pr. ISMAIL TAHIRI – chef de filière – pour son dévouement remarquable et le maintien d'un climat d'excellence à l'ENS Tétouan.", "L'ensemble du corps professoral de l'ENS Tétouan pour la qualité de la formation mathématique et méthodologique reçue.", "Nos familles pour leurs sacrifices, leurs prières constantes et leur soutien inconditionnel tout au long de nos études.", "Nos amis et collègues de promotion pour les moments de partage et d'entraide inoubliables.", "Merci à vous, membres du jury, pour l'honneur que vous nous faites en évaluant ce travail."] }
-    ];
-    while(slides.length < 50) slides.push({ title: "Approfondissement", lines: ["Détails supplémentaires sur l'optimisation combinatoire appliquée au TSP.", "Notre implémentation Python des algorithmes est disponible sur GitHub.", "Les métriques de performance sur les instances TSPLIB (berlin52, eil76, kroA100) montrent des écarts inférieurs à 2%.", "Le TSP reste un problème fondamental et passionnant, encore largement étudié en recherche opérationnelle et en informatique théorique.", "Nous espérons que ce travail contribuera à une meilleure compréhension des défis et des solutions en optimisation combinatoire."] });
-
-    let currentSlide = 0;
-    const totalSlides = slides.length;
-
-    function renderSlides() {
-        const wrapper = document.getElementById('slidesWrapper');
-        wrapper.innerHTML = '';
-        slides.forEach((slide, idx) => {
-            const div = document.createElement('div');
-            div.className = 'slide';
-            if (idx === 0) div.classList.add('active');
-            let content = `<div class="slide-content"><div class="slide-header"><div class="slide-title">${slide.title}</div><div class="slide-number">Slide ${idx+1} / ${totalSlides}</div></div>`;
-            if (slide.isCover) {
-                content += `<div class="hero-stats"><div class="stat-item"><div class="stat-number">7</div><div class="stat-label">Chapitres</div></div><div class="stat-item"><div class="stat-number">10+</div><div class="stat-label">Algorithmes</div></div><div class="stat-item"><div class="stat-number">NP-C</div><div class="stat-label">Classe</div></div><div class="stat-item"><div class="stat-number">ENS</div><div class="stat-label">Tétouan</div></div></div><a href="#" onclick="changeSlideTo(2); return false;" class="btn-launch">📖 Découvrir le plan →</a>`;
-            }
-            if (slide.schema === "tsp") {
-                content += `<div class="graph-schema"><div class="graph-nodes"><div class="graph-node">A</div><span style="font-size:1.2rem;">→</span><div class="graph-node">B</div><span>→</span><div class="graph-node">C</div><span>→</span><div class="graph-node">D</div><span>→</span><div class="graph-node">E</div><span>→</span><div class="graph-node">A</div></div><p style="font-size:0.75rem;">Cycle hamiltonien – passage par toutes les villes une seule fois</p></div>`;
-            }
-            if (slide.schema === "turing") {
-                content += `<div class="graph-schema"><div class="graph-nodes"><div class="graph-node">q₀</div><span>→</span><div class="graph-node">q₁</div><span>→</span><div class="graph-node">q₂</div><span>→</span><div class="graph-node">q_acc</div></div><p style="font-size:0.75rem;">Machine de Turing – états et transitions sur ruban infini</p></div>`;
-            }
-            if (slide.code) {
-                content += `<div class="code-block">def held_karp(dist):
+        { 
+            title: "Optimisation <span>Combinatoire</span>", 
+            isCover: true,
+            content: `
+                <div style="text-align:center; margin-bottom: 1.5rem;">
+                    <h1 style="font-size:2.5rem;">🧳 OPTIMISATION COMBINATOIRE APPLIQUÉE<br>AU PROBLÈME DU VOYAGEUR DE COMMERCE</h1>
+                    <p style="font-size:1rem; margin: 0.5rem 0;">Université Abdelmalek Essaâdi – École Normale Supérieure Tétouan</p>
+                    <p style="font-weight:600;">Projet de Fin d’Études – Licence en Mathématiques</p>
+                    <div style="height:2px; width:80px; background:#c9a84c; margin:1rem auto;"></div>
+                    <p><strong>Réalisé par :</strong> ER-RTHIMI SOFIANE & ER-ROUFFI ILYAS</p>
+                    <p><strong>Encadré par :</strong> Pr. EL HICHAMI OTHMANE</p>
+                    <p>📅 Année universitaire 2025–2026</p>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item"><div class="stat-number">7</div><div class="stat-label">CHAPITRES</div></div>
+                    <div class="stat-item"><div class="stat-number">10+</div><div class="stat-label">ALGORITHMES</div></div>
+                    <div class="stat-item"><div class="stat-number">NP-C</div><div class="stat-label">CLASSE</div></div>
+                    <div class="stat-item"><div class="stat-number">ENS</div><div class="stat-label">TÉTOUAN</div></div>
+                </div>
+                <div style="text-align:center;"><a href="#" onclick="window.changeSlideTo(1); return false;" class="btn-launch">📖 DÉCOUVRIR LE PLAN →</a></div>
+            `
+        },
+        { title: "Plan du <span>Mémoire</span>", content: `
+            <div class="chapter-header"><span class="badge">📖 SOMMAIRE GÉNÉRAL</span></div>
+            <div class="grid-2">
+                <div class="stat-card"><i class="fas fa-chart-line" style="color:#c9a84c; font-size:1.8rem;"></i><p><strong>Chapitre 1</strong><br>Optimisation Combinatoire</p></div>
+                <div class="stat-card"><i class="fas fa-microchip" style="color:#c9a84c; font-size:1.8rem;"></i><p><strong>Chapitre 2</strong><br>Calculabilité et Décidabilité</p></div>
+                <div class="stat-card"><i class="fas fa-chart-bar" style="color:#c9a84c; font-size:1.8rem;"></i><p><strong>Chapitre 3</strong><br>Théorie de la complexité : P, NP, NP-complets, NP-difficiles</p></div>
+                <div class="stat-card"><i class="fas fa-map-marked-alt" style="color:#c9a84c; font-size:1.8rem;"></i><p><strong>Chapitre 4</strong><br>Le problème du Voyageur de Commerce (TSP)</p></div>
+                <div class="stat-card"><i class="fas fa-brain" style="color:#c9a84c; font-size:1.8rem;"></i><p><strong>Chapitre 5</strong><br>Programmation dynamique (Held-Karp)</p></div>
+                <div class="stat-card"><i class="fas fa-cogs" style="color:#c9a84c; font-size:1.8rem;"></i><p><strong>Chapitre 6</strong><br>Méthodes de résolution : exactes, heuristiques, métaheuristiques</p></div>
+                <div class="stat-card"><i class="fas fa-laptop-code" style="color:#c9a84c; font-size:1.8rem;"></i><p><strong>Chapitre 7</strong><br>Application TSP WORLD PRO</p></div>
+            </div>
+            <p style="margin-top:0.5rem;">Le mémoire suit une progression rigoureuse : des fondements mathématiques et théoriques (calculabilité, complexité) jusqu'à l'implémentation concrète et l'application web interactive.</p>
+        ` },
+        { title: "Chapitre 1 · <span>Optimisation Combinatoire</span>", content: `
+            <div class="chapter-header"><span class="badge">📖 CHAPITRE 1</span></div>
+            <p>L'optimisation combinatoire consiste à trouver l'optimum global (minimum ou maximum) d'une fonction objectif sur un ensemble discret de solutions réalisables. Formellement : <strong>Min f(x) / x ∈ S ⊂ {0,1}ⁿ</strong>.</p>
+            <p>L'espace de recherche croît exponentiellement – l'énumération exhaustive devient impossible dès n > 20-30.</p>
+            <p><strong>Programmation linéaire en nombres entiers (PLNE)</strong> : modélisation polyédrale, algorithme du Simplex, relaxation linéaire, méthode des plans coupants.</p>
+            <p><strong>Programmation stochastique</strong> : introduction de l'incertitude (scénarios, lois de probabilité) – modèles à deux étapes, espérance mathématique du coût.</p>
+            <div class="code-block">Min cᵀx  sujet à Ax ≤ b, x ≥ 0, x entier – formulation classique d'un PLNE.</div>
+            <p>Applications : logistique (tournées de livraison), finance (gestion de portefeuille), bioinformatique (séquençage ADN), télécommunications (routage).</p>
+        ` },
+        { title: "Chapitre 2 · <span>Calculabilité & Décidabilité</span>", content: `
+            <div class="chapter-header"><span class="badge">📖 CHAPITRE 2</span></div>
+            <p>Née dans les années 1930 avec Turing, Church et Gödel – réponse à la question : <strong>quels problèmes peuvent être résolus par un algorithme ?</strong></p>
+            <p><strong>Machine de Turing</strong> : M = (Q, Σ, Γ, δ, q₀, q_acc, q_rej) – ruban infini, tête lecture/écriture, fonction de transition δ. Modélise toute notion d'algorithme effectif.</p>
+            <p><strong>Thèse de Church-Turing</strong> : tout ce qui est effectivement calculable est calculable par une machine de Turing. Acceptée universellement depuis 1936.</p>
+            <div class="graph-schema"><div class="graph-nodes"><div class="graph-node">q₀</div><span>→</span><div class="graph-node">q₁</div><span>→</span><div class="graph-node">q_acc</div></div><p style="font-size:0.7rem;">Exemple : reconnaissance de {0ⁿ1ⁿ}</p></div>
+            <p><strong>Problème de l'arrêt (HALT)</strong> : indécidable – aucune machine de Turing ne peut décider pour tout couple (M,w) si M s'arrête sur w. Preuve par diagonalisation.</p>
+            <p><strong>Théorème de Rice</strong> : toute propriété non triviale de la fonction calculée par un programme est indécidable. Conséquences majeures pour l'analyse statique.</p>
+            <p>Le TSP est décidable (nombre fini de tours) mais la décidabilité ne garantit pas l'efficacité – transition vers la théorie de la complexité.</p>
+        ` },
+        { title: "Chapitre 3 · <span>Complexité : P, NP, NP-complets, NP-difficiles</span>", content: `
+            <div class="chapter-header"><span class="badge">📖 CHAPITRE 3</span></div>
+            <p><strong>Classe P</strong> : problèmes décidables en temps polynomial O(nᵏ) – exemples : tri, plus court chemin (Dijkstra), test de primalité AKS. Considérés comme « traitables ».</p>
+            <p><strong>Classe NP</strong> : problèmes dont une solution candidate (certificat) est vérifiable en temps polynomial. TSP décisionnel ∈ NP : vérifier une tournée donnée en O(n).</p>
+            <p><strong>NP-complet</strong> : Q ∈ NP et ∀R∈NP, R ≤_p Q. Théorème de Cook-Levin (1971) : SAT est NP-complet. TSP décisionnel est NP-complet (réduction depuis cycle hamiltonien).</p>
+            <p><strong>NP-difficile</strong> : tout problème de NP se réduit à H, mais H n'est pas nécessairement dans NP. Exemple : version optimisation du TSP (trouver la tournée minimale).</p>
+            <div class="code-block">P ⊆ NP – la question P = NP ? est ouverte (prix du millénaire : 1 000 000 $). La majorité des experts pense P ≠ NP.</div>
+            <p>Conséquences : si P = NP, cryptographie RSA compromise, optimisation massive possible. Si P ≠ NP, le TSP reste intrinsèquement difficile – on utilise des heuristiques.</p>
+        ` },
+        { title: "Chapitre 4 · <span>Le problème du Voyageur de Commerce (TSP)</span>", content: `
+            <div class="chapter-header"><span class="badge">📖 CHAPITRE 4</span></div>
+            <p><strong>Énoncé</strong> : « Étant donné n villes et les distances entre chaque paire, trouver le plus court circuit passant par chaque ville exactement une fois et revenant au point de départ. »</p>
+            <p><strong>Formalisation</strong> : Soit V = {v₁,…,vₙ} et d:V×V→ℝ⁺. Trouver la permutation π ∈ Sₙ minimisant L(π) = d(v_π(n),v_π(1)) + Σ_{k=1}^{n-1} d(v_π(k),v_π(k+1)).</p>
+            <div class="graph-schema"><div class="graph-nodes"><div class="graph-node">A</div><span>→</span><div class="graph-node">B</div><span>→</span><div class="graph-node">C</div><span>→</span><div class="graph-node">D</div><span>→</span><div class="graph-node">A</div></div><p>Cycle hamiltonien – coût total minimal</p></div>
+            <p><strong>Variantes</strong> : symétrique (sTSP), asymétrique (aTSP), métrique (inégalité triangulaire), euclidien, TSP avec fenêtres de temps (TSPTW), multi-voyageurs (mTSP), TSP probabiliste (PTSP).</p>
+            <p><strong>Explosion combinatoire</strong> : (n-1)!/2 tours – n=20 → 6×10¹⁶ possibilités, n=30 → 4×10³⁰ (impossible par force brute). NP-difficile – pas d'algorithme polynomial connu.</p>
+            <p>Applications : logistique (tournées de livraison), perçage de circuits imprimés (VLSI), séquençage ADN, astronomie (planification d'observations).</p>
+        ` },
+        { title: "Chapitre 5 · <span>Programmation dynamique (Held-Karp, 1962)</span>", content: `
+            <div class="chapter-header"><span class="badge">📖 CHAPITRE 5</span></div>
+            <p><strong>Principe d'optimalité de Bellman</strong> (1957) : « Toute politique optimale est composée de sous-politiques optimales. »</p>
+            <p><strong>Définition de la table</strong> : dp[S][j] = coût minimal d'un chemin partant de la ville 1, visitant exactement l'ensemble S et se terminant en j ∈ S.</p>
+            <p><strong>Cas de base</strong> : dp[{1,j}][j] = w(1,j).</p>
+            <p><strong>Récurrence</strong> : dp[S][j] = min_{i∈S\\{j}} { dp[S\\{j}][i] + w(i,j) } pour |S| ≥ 3.</p>
+            <p><strong>Solution finale</strong> : L* = min_{j≠1} { dp[V][j] + w(j,1) }.</p>
+            <div class="code-block">Complexité : O(n²·2ⁿ) temps, O(n·2ⁿ) mémoire. Pour n=25 : 2,1×10¹⁰ opérations contre 1,6×10²⁵ pour force brute – gain ×7,6×10¹⁴.</div>
+            <p>Limite pratique : n ≤ 25 sur machine standard, n ≤ 30-35 avec optimisation mémoire.</p>
+            <div class="code-block">def held_karp(dist):
     n = len(dist)
     INF = float('inf')
     dp = [[INF]*n for _ in range(1<<n)]
@@ -251,13 +280,60 @@
                 prev = mask ^ (1<<j)
                 dp[mask][j] = min(dp[mask][j], dp[prev][i] + dist[i][j])
     full = (1<<n)-1
-    return min(dp[full][j] + dist[j][0] for j in range(1,n))</div>`;
-            }
-            for (let line of slide.lines) content += `<p>${line}</p>`;
-            if (slide.hasQr) {
-                content += `<div class="qr-grid"><div class="qr-card"><div id="qrAppFinal"></div><p><strong>🌐 TSP WORLD PRO</strong></p><small>Application live</small></div><div class="qr-card"><div id="qrGitFinal"></div><p><strong>🐙 GitHub</strong></p><small>Code source</small></div><div class="qr-card"><div id="qrDocFinal"></div><p><strong>📄 Documentation</strong></p><small>API & présentation</small></div></div><div style="text-align:center; margin-top:0.8rem;"><span class="badge"><i class="fas fa-link"></i> prjet-sofien-iliass.vercel.app</span></div>`;
-            }
-            content += `<footer>Optimisation Combinatoire · ENS Tétouan 2025-2026</footer></div>`;
+    return min(dp[full][j] + dist[j][0] for j in range(1,n))</div>
+        ` },
+        { title: "Chapitre 6 · <span>Méthodes de résolution (exactes & approchées)</span>", content: `
+            <div class="chapter-header"><span class="badge">📖 CHAPITRE 6</span></div>
+            <p><strong>Méthodes exactes</strong> : Branch & Bound (bornes inférieures via relaxation du problème d'affectation), Branch & Cut (génération dynamique de contraintes d'élimination de sous-tours – notre contribution), programmation linéaire en nombres entiers.</p>
+            <p><strong>Algorithmes d'approximation</strong> : Christofides (1976) – garantie 3/2 pour TSP métrique, complexité O(n³). Construit un MST, ajoute un couplage parfait sur les sommets de degré impair, puis court-circuite le cycle eulérien.</p>
+            <p><strong>Heuristiques constructives</strong> : Plus proche voisin (Nearest Neighbor) – O(n²), écart moyen ≈ 15-20% par rapport à l'optimum.</p>
+            <p><strong>Amélioration locale</strong> : 2-OPT, 3-OPT – échange d'arêtes pour supprimer les croisements, réduction de l'écart à < 5% après quelques itérations.</p>
+            <p><strong>Métaheuristiques</strong> : Recuit simulé (Metropolis, acceptation probabiliste), Recherche tabou (mémoire adaptative), Algorithmes génétiques (croisement, mutation, sélection), Colonies de fourmis (phéromones, règle de transition probabiliste).</p>
+            <div class="grid-2"><div class="stat-card">🔥 Recuit simulé<br><small>Évite les optima locaux</small></div><div class="stat-card">🐜 ACO<br><small>Inspiré des fourmis</small></div><div class="stat-card">🧬 GA<br><small>Évolution naturelle</small></div><div class="stat-card">📊 Branch & Cut<br><small>Exact jusqu'à n=100+</small></div></div>
+        ` },
+        { title: "Chapitre 7 · <span>Application TSP WORLD PRO</span>", content: `
+            <div class="chapter-header"><span class="badge">🌍 APPLICATION FINALE – TSP WORLD PRO</span></div>
+            <p>Application web professionnelle interactive développée dans le cadre du PFE – visualisation cartographique, algorithmes temps réel, géolocalisation, QR codes.</p>
+            <p><strong>Fonctionnalités</strong> :</p>
+            <ul style="margin-left:1.5rem; margin-bottom:1rem;"><li>🗺️ Carte interactive Leaflet / OpenStreetMap</li><li>📍 Géolocalisation GPS en temps réel (navigator.geolocation)</li><li>⚙️ Algorithmes implémentés : Nearest Neighbor (O(n²)), 2-OPT (O(n³)), Held-Karp exact (n≤18)</li><li>📱 Interface responsive (mobile, tablette, desktop)</li><li>🔗 Partage instantané via QR codes dynamiques</li></ul>
+            <div class="qr-grid" id="appQrGrid"><div class="qr-card"><div id="qrAppFinal"></div><p><strong>🌐 TSP WORLD PRO</strong></p><small>prjet-sofien-iliass.vercel.app</small></div><div class="qr-card"><div id="qrGitFinal"></div><p><strong>🐙 GitHub</strong></p><small>Code source complet</small></div><div class="qr-card"><div id="qrDocFinal"></div><p><strong>📄 Documentation</strong></p><small>API & présentation</small></div></div>
+            <p><strong>Lien direct :</strong> <a href="https://prjet-sofien-iliass.vercel.app/" target="_blank" style="color:#c9a84c;">https://prjet-sofien-iliass.vercel.app/</a></p>
+            <p><strong>Résultats expérimentaux</strong> : sur instances TSPLIB (berlin52, eil76, kroA100), recuit simulé et colonies de fourmis atteignent un écart < 2% par rapport à l'optimum. Branch & Cut résout des instances jusqu'à n=100.</p>
+        ` },
+        { title: "Conclusion & <span>Perspectives</span>", content: `
+            <div class="chapter-header"><span class="badge">🏁 SYNTHÈSE FINALE</span></div>
+            <p>Le TSP est NP-complet mais décidable – des algorithmes exacts (Held-Karp, Branch & Cut) permettent de résoudre des instances de taille raisonnable (n ≤ 100).</p>
+            <p><strong>Contributions majeures du mémoire</strong> :</p>
+            <ul style="margin-left:1.5rem;"><li>Étude approfondie des classes de complexité et de la NP-complétude du TSP.</li><li>Implémentation de l'algorithme de Held-Karp avec bitmasks.</li><li>Stratégie de génération dynamique de contraintes (Branch & Cut) pour l'ATSP.</li><li>Développement de l'application TSP WORLD PRO (5000+ lignes de code).</li></ul>
+            <p><strong>Perspectives</strong> : Deep Learning (Pointer Networks, GNNs) pour le TSP, algorithmes quantiques (QAOA), extension au TSP probabiliste (PTSP) avec modèles à deux étapes, optimisation multi-objectifs (distance + CO₂ + temps).</p>
+            <p>Ce travail a démontré la richesse et la transversalité de l'optimisation combinatoire, allant des fondements théoriques (machines de Turing, thèse de Church-Turing) jusqu'à une application web fonctionnelle utilisable en situation réelle.</p>
+        ` },
+        { title: "Remerciements", content: `
+            <div class="chapter-header"><span class="badge">🙏 REMERCIEMENTS</span></div>
+            <p><strong>Pr. EL HICHAMI OTHMANE</strong> – directeur de recherche – pour sa disponibilité sans faille, ses relectures minutieuses et ses conseils éclairés.</p>
+            <p><strong>Pr. ISMAIL TAHIRI</strong> – chef de filière – pour son dévouement remarquable et le maintien d'un climat d'excellence à l'ENS Tétouan.</p>
+            <p>L'ensemble du corps professoral de l'ENS Tétouan pour la qualité de la formation mathématique et méthodologique reçue.</p>
+            <p>Nos familles pour leurs sacrifices, leurs prières constantes et leur soutien inconditionnel tout au long de nos études.</p>
+            <p>Nos amis et collègues de promotion pour les moments de partage et d'entraide inoubliables.</p>
+            <p>Merci à vous, membres du jury, pour l'honneur que vous nous faites en évaluant ce travail.</p>
+            <div style="margin-top:1.5rem; text-align:center;"><i class="fas fa-code"></i> Sofiane & Ilyas – PFE 2025-2026</div>
+        ` }
+    ];
+    // ensure at least 7 chapters are clearly shown (we have 12 slides)
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+
+    function renderSlides() {
+        const wrapper = document.getElementById('slidesWrapper');
+        wrapper.innerHTML = '';
+        slides.forEach((slide, idx) => {
+            const div = document.createElement('div');
+            div.className = 'slide';
+            if (idx === 0) div.classList.add('active');
+            let content = `<div class="slide-content"><div class="slide-header"><div class="slide-title">${slide.title}</div><div class="slide-number">${idx+1} / ${totalSlides}</div></div>`;
+            if (slide.isCover) content += slide.content;
+            else content += `<div class="chapter-header" style="margin-bottom:1rem;"><span class="badge">📖 SLIDE ${idx+1}</span></div>` + slide.content;
+            content += `<footer>Optimisation Combinatoire · ENS Tétouan 2025-2026 · ER-RTHIMI Sofiane & ER-ROUFFI Ilyas</footer></div>`;
             div.innerHTML = content;
             wrapper.appendChild(div);
         });
@@ -272,12 +348,12 @@
         document.getElementById('slideCounter').innerHTML = `Slide ${currentSlide+1} / ${totalSlides}`;
         document.getElementById('progressBar').style.width = `${((currentSlide+1)/totalSlides)*100}%`;
     }
-    function nextSlide() { if (currentSlide < totalSlides-1) { currentSlide++; updateNav(); } }
-    function prevSlide() { if (currentSlide > 0) { currentSlide--; updateNav(); } }
-    function changeSlideTo(idx) { if (idx >=0 && idx < totalSlides) { currentSlide = idx; updateNav(); } }
-    document.getElementById('nextBtn').addEventListener('click', nextSlide);
-    document.getElementById('prevBtn').addEventListener('click', prevSlide);
-    document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') nextSlide(); if (e.key === 'ArrowLeft') prevSlide(); });
+    window.nextSlide = function() { if (currentSlide < totalSlides-1) { currentSlide++; updateNav(); } };
+    window.prevSlide = function() { if (currentSlide > 0) { currentSlide--; updateNav(); } };
+    window.changeSlideTo = function(idx) { if (idx >=0 && idx < totalSlides) { currentSlide = idx; updateNav(); } };
+    document.getElementById('nextBtn').addEventListener('click', () => window.nextSlide());
+    document.getElementById('prevBtn').addEventListener('click', () => window.prevSlide());
+    document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') window.nextSlide(); if (e.key === 'ArrowLeft') window.prevSlide(); });
     renderSlides();
 </script>
 </body>
