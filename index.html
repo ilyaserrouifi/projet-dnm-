@@ -3,60 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>TSP | Optimisation Combinatoire - ENS Tétouan</title>
+    <title>TSP WORLD PRO | Présentation PFE - ENS Tétouan</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator-1.4.4/qrcode.min.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(145deg, #eef2f7 0%, #dce5ec 100%);
+            background: linear-gradient(145deg, #f0f4f8 0%, #e2e8f0 100%);
             overflow: hidden;
         }
-        .presentation-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; overflow: hidden; }
-        .slides-wrapper { position: relative; width: 100%; height: 100%; }
-        .slide {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s;
-            overflow-y: auto; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+
+        .presentation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
         }
-        .slide.active { opacity: 1; visibility: visible; z-index: 10; }
-        .slide::-webkit-scrollbar { width: 6px; }
-        .slide::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 10px; }
-        .slide::-webkit-scrollbar-thumb { background: #2c7da0; border-radius: 10px; }
-        .slide-content { max-width: 1200px; margin: 0 auto; padding: 2rem 2.5rem; min-height: 100%; }
+
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease-in-out, visibility 0.4s;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: #2c7da0;
+            border-radius: 10px;
+        }
+
+        .slide-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 2.5rem;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
         .slide-header {
-            display: flex; justify-content: space-between; align-items: baseline;
-            border-bottom: 3px solid #2c7da0; padding-bottom: 0.8rem; margin-bottom: 1.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 3px solid #2c7da0;
+            padding-bottom: 0.8rem;
+            margin-bottom: 2rem;
             flex-wrap: wrap;
         }
-        .slide-title { font-size: 1.7rem; font-weight: 800; background: linear-gradient(135deg, #1e3c4c, #2c7da0); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .slide-number { background: #e9edf2; padding: 0.25rem 1rem; border-radius: 40px; font-weight: 600; font-size: 0.75rem; color: #1e5a6e; }
-        .nav-controls { position: fixed; bottom: 2rem; right: 2rem; display: flex; gap: 0.8rem; z-index: 100; }
-        .nav-btn { width: 48px; height: 48px; border-radius: 50%; background: #1e3c4c; color: white; border: none; cursor: pointer; font-size: 1.2rem; transition: 0.25s; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-        .nav-btn:hover { background: #2c7da0; transform: scale(1.05); }
-        .progress-bar { position: fixed; bottom: 0; left: 0; height: 3px; background: #2c7da0; transition: width 0.2s; z-index: 100; }
-        .slide-counter { position: fixed; bottom: 2rem; left: 2rem; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); color: white; padding: 0.35rem 1rem; border-radius: 40px; font-size: 0.8rem; font-weight: 600; z-index: 100; }
-        h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 1rem; background: linear-gradient(135deg, #1e3c4c, #2c7da0); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        h2 { font-size: 1.7rem; font-weight: 700; margin: 1rem 0 0.6rem; color: #1e3c4c; border-left: 4px solid #2c7da0; padding-left: 1rem; }
-        h3 { font-size: 1.2rem; font-weight: 600; margin: 0.8rem 0 0.4rem; color: #2c7da0; }
-        .badge { display: inline-block; background: #e6f3f8; padding: 0.2rem 0.9rem; border-radius: 30px; font-size: 0.7rem; font-weight: 600; color: #1e5a6e; margin: 0.2rem; }
-        .code-block { background: #0a1922; color: #c7f0e8; padding: 0.8rem 1rem; border-radius: 1rem; font-family: monospace; font-size: 0.75rem; overflow-x: auto; margin: 0.8rem 0; white-space: pre-wrap; }
-        .qr-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; margin: 1.2rem 0; }
-        .qr-card { background: white; border-radius: 1rem; padding: 0.8rem; box-shadow: 0 8px 18px rgba(0,0,0,0.1); text-align: center; min-width: 150px; }
-        canvas.qr-canvas { width: 110px; height: 110px; display: block; margin: 0 auto; }
-        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1rem 0; }
-        .stat-card { background: linear-gradient(135deg, #f1f9fe, #e8f1f7); border-radius: 1rem; padding: 1rem; text-align: center; border: 1px solid #cbdde6; }
-        table { width: 100%; border-collapse: collapse; margin: 0.8rem 0; font-size: 0.85rem; }
-        th, td { padding: 0.5rem; text-align: left; border-bottom: 1px solid #cbd5e1; }
-        th { background: #2c7da0; color: white; }
-        .mock-map { background: linear-gradient(145deg, #cbd5e1, #b9c4d0); border-radius: 1rem; height: 120px; display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin: 1rem 0; font-weight: 600; }
-        footer { margin-top: 1.5rem; text-align: center; font-size: 0.7rem; color: #5a6e7c; }
-        @media (max-width: 768px) { .slide-content { padding: 1rem; } h1 { font-size: 1.8rem; } }
+
+        .slide-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e3c4c, #2c7da0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .slide-number {
+            background: #e9edf2;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: #1e5a6e;
+        }
+
+        .nav-controls {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 0.8rem;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #1e3c4c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: 0.25s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn:hover {
+            background: #2c7da0;
+            transform: scale(1.05);
+        }
+
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: #2c7da0;
+            transition: width 0.2s;
+            z-index: 100;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 0.35rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 100;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #1e3c4c, #2c7da0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1e3c4c;
+        }
+
+        p {
+            font-size: 1.05rem;
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+            color: #2c3e50;
+        }
+
+        .code-block {
+            background: #0a1922;
+            color: #c7f0e8;
+            padding: 0.8rem 1rem;
+            border-radius: 1rem;
+            font-family: monospace;
+            font-size: 0.8rem;
+            margin: 1rem 0;
+            white-space: pre-wrap;
+        }
+
+        .qr-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .qr-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+            text-align: center;
+            min-width: 150px;
+        }
+
+        canvas.qr-canvas {
+            width: 110px;
+            height: 110px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e6f3f8;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #1e5a6e;
+            margin: 0.2rem;
+        }
+
+        .mock-map {
+            background: linear-gradient(145deg, #cbd5e1, #b9c4d0);
+            border-radius: 1rem;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin: 1rem 0;
+            font-weight: 600;
+        }
+
+        footer {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #5a6e7c;
+        }
     </style>
 </head>
 <body>
+
 <div class="presentation-container">
     <div class="slides-wrapper" id="slidesWrapper"></div>
     <div class="nav-controls">
@@ -74,7 +264,8 @@
         qr.make();
         const cellSize = size / qr.getModuleCount();
         const canvas = document.createElement('canvas');
-        canvas.width = size; canvas.height = size;
+        canvas.width = size;
+        canvas.height = size;
         const ctx = canvas.getContext('2d');
         for (let row = 0; row < qr.getModuleCount(); row++) {
             for (let col = 0; col < qr.getModuleCount(); col++) {
@@ -83,104 +274,113 @@
             }
         }
         const container = document.getElementById(containerId);
-        if (container) { container.innerHTML = ''; container.appendChild(canvas); }
+        if (container) {
+            container.innerHTML = '';
+            container.appendChild(canvas);
+        }
     }
 
+    // ========= 50 SLIDES - CHAQUE SLIDE = 3 à 5 LIGNES =========
     const slides = [];
 
-    // === PAGE DE GARDE ===
-    slides.push({ title: "OPTIMISATION COMBINATOIRE", content: `<div style="text-align:center; padding:1rem 0;"><i class="fas fa-university" style="font-size:3rem; color:#2c7da0;"></i><h1>Problème du Voyageur de Commerce</h1><p style="font-size:1.1rem;">TSP : Théorie, Algorithmes et Application</p><div style="margin:1.5rem 0;"><strong>Université Abdelmalek Essaâdi</strong><br>École Normale Supérieure de Tétouan<br>Département Mathématiques et Informatique</div><div><strong>Réalisé par :</strong> ER-RTHIMI Sofiane & ER-ROUFFI Ilyas<br><strong>Encadré par :</strong> Pr. EL HICHAMI Othmane</div><div style="margin-top:1rem;"><span class="badge"><i class="fas fa-calendar"></i> 2025-2026</span><span class="badge"><i class="fas fa-trophy"></i> Projet de Fin d'Études</span><span class="badge"><i class="fas fa-code"></i> 5000+ lignes</span></div><footer>Licence Mathématiques · Optimisation Combinatoire</footer></div>` });
+    // 1. Page de garde
+    slides.push({ title: "OPTIMISATION COMBINATOIRE", lines: ["Université Abdelmalek Essaâdi - ENS Tétouan", "Projet de Fin d’Études – Licence Mathématiques", "ER-RTHIMI Sofiane & ER-ROUFFI Ilyas", "Encadré par : Pr. EL HICHAMI Othmane", "TSP WORLD PRO – Application professionnelle"] });
 
-    // === INTRODUCTION ===
-    slides.push({ title: "INTRODUCTION GÉNÉRALE", content: `<h2>Contexte et problématique</h2><p>Le problème du voyageur de commerce (TSP) est l'un des problèmes d'optimisation combinatoire les plus étudiés depuis le XIXe siècle. Il consiste à trouver le plus court chemin passant par un ensemble de villes exactement une fois et retournant au point de départ.</p><div class="grid-2"><div class="stat-card"><i class="fas fa-chart-line fa-2x"></i><h3>NP-difficile</h3><p>Aucun algorithme polynomial connu</p></div><div class="stat-card"><i class="fas fa-truck fa-2x"></i><h3>Applications</h3><p>Logistique, robotique, bioinformatique</p></div></div><p>Ce mémoire présente une étude comparative des méthodes exactes (programmation dynamique, Branch-and-Bound) et approchées (heuristiques, métäheuristiques), avec une implémentation nommée <strong>TSP WORLD PRO</strong>.</p><div class="code-block">// Objectif : minimiser la distance totale d'une tournée Hamiltonienne</div>` });
+    // 2. Introduction
+    slides.push({ title: "INTRODUCTION", lines: ["Le problème du voyageur de commerce (TSP) est NP-difficile.", "Trouver le cycle hamiltonien de coût minimal dans un graphe.", "Applications : logistique, robotique, bioinformatique, VLSI.", "Notre travail : théorie + implémentation TSP WORLD PRO.", "Plus de 5000 lignes de code structuré."]);
 
-    // === CHAPITRE 1 : Calculabilité (Slides 3 à 8) ===
-    const chap1 = ["Machine de Turing & Décidabilité", "Problème de l'arrêt", "Thèse de Church-Turing", "Langages décidables", "Théorème de Rice", "Décidabilité du TSP"];
-    chap1.forEach((t,i) => slides.push({ title: `CHAPITRE 1 · Calculabilité · ${t}`, content: `<h2>${t}</h2><p>${getChap1(i)}</p><div class="code-block">// Une machine de Turing M = (Q, Σ, Γ, δ, q0, qacc, qrej)</div>` }));
+    // 3-17 : Chapitre 1 (Calculabilité) 15 slides
+    const chap1 = ["Machine de Turing", "Fonctions calculables", "Thèse de Church-Turing", "Langages décidables", "Semi-décidabilité", "Problème de l'arrêt", "Preuve par diagonalisation", "Théorème de Rice", "Problèmes indécidables", "10e problème de Hilbert", "Correspondance de Post", "Décidabilité du TSP", "Vérification formelle", "Limites du calcul", "Conclusion Chapitre 1"];
+    for (let i = 0; i < chap1.length; i++) {
+        slides.push({ title: `CHAPITRE 1 · ${chap1[i]}`, lines: [`Définition : ${chap1[i]}`, "La calculabilité délimite ce qui est algorithmiquement possible.", "Une machine de Turing est un modèle formel universel.", "Toute fonction calculable l'est par une MT (Church-Turing).", "Le TSP est décidable mais NP-difficile."] });
+    }
 
-    // === CHAPITRE 2 : Complexité P, NP (Slides 9 à 14) ===
-    const chap2 = ["Classe P", "Classe NP", "Vérificateur polynomial", "P ⊆ NP", "Théorème de Cook-Levin", "TSP est NP-complet"];
-    chap2.forEach((t,i) => slides.push({ title: `CHAPITRE 2 · Complexité · ${t}`, content: `<h2>${t}</h2><p>${getChap2(i)}</p><div class="badge">NP-complet · Problème du millénaire</div>` }));
+    // 18-32 : Chapitre 2 (Complexité) 15 slides
+    const chap2 = ["Classe P", "Classe NP", "Vérificateur polynomial", "P ⊆ NP", "Problème SAT", "Théorème de Cook-Levin", "Réduction polynomiale", "NP-complet", "TSP est NP-complet", "NP-difficile", "Conjecture P vs NP", "Cryptographie RSA", "co-NP", "Classes intermédiaires", "Conclusion Complexité"];
+    for (let i = 0; i < chap2.length; i++) {
+        slides.push({ title: `CHAPITRE 2 · ${chap2[i]}`, lines: [`${chap2[i]} : concept fondamental de la complexité.`, "P = problèmes faciles (temps polynomial).", "NP = problèmes difficiles mais vérifiables rapidement.", "P ≠ NP est la conjecture la plus célèbre (prix 1M$).", "TSP décisionnel est NP-complet."] });
+    }
 
-    // === CHAPITRE 3 : Programmation dynamique (Slides 15 à 20) ===
-    const chap3 = ["Principe d'optimalité de Bellman", "Algorithme de Held-Karp", "Équation de récurrence", "Complexité O(n²·2ⁿ)", "Tableau DP", "Comparaison force brute"];
-    chap3.forEach((t,i) => slides.push({ title: `CHAPITRE 3 · Programmation Dynamique · ${t}`, content: `<h2>${t}</h2><p>${getChap3(i)}</p><div class="code-block">dp[mask][j] = min_{i∈mask\{j}} (dp[mask^(1<<j)][i] + dist[i][j])</div>` }));
+    // 33-42 : Chapitre 3 (Programmation dynamique) 10 slides
+    const chap3 = ["Principe de Bellman", "Held-Karp", "Équation récurrence", "Complexité O(n²·2ⁿ)", "Table DP", "Cas de base", "Reconstruction", "Mémoïsation", "Bottom-up", "Limites pratiques"];
+    for (let i = 0; i < chap3.length; i++) {
+        slides.push({ title: `CHAPITRE 3 · ${chap3[i]}`, lines: [`${chap3[i]} : élément clé de la programmation dynamique.`, "Une solution optimale contient des sous-solutions optimales.", "dp[mask][j] = min(dp[mask^(1<<j)][i] + dist[i][j])", "Complexité : O(n²·2ⁿ) bien meilleur que O(n!).", "Exact pour n ≤ 25 en pratique."] });
+    }
 
-    // === CHAPITRE 4 : Branch-and-Bound (Slides 21 à 26) ===
-    const chap4 = ["Concept Branch & Bound", "Borne inférieure & élagage", "Relaxation d'affectation", "Stratégie DFS/BFS", "Branch-and-Cut", "Solveur Concorde"];
-    chap4.forEach((t,i) => slides.push({ title: `CHAPITRE 4 · Branch-and-Bound · ${t}`, content: `<h2>${t}</h2><p>${getChap4(i)}</p></table><tr><th>Méthode</th><th>n max pratique</th><tr><td>Branch-and-Bound</td><td>≤ 35</td></tr></table>` }));
+    // 43-47 : Chapitre 4 (Branch-and-Bound) 5 slides
+    const chap4 = ["Concept B&B", "Borne inférieure", "Élagage", "Relaxation d'affectation", "Branch-and-Cut"];
+    for (let i = 0; i < chap4.length; i++) {
+        slides.push({ title: `CHAPITRE 4 · ${chap4[i]}`, lines: [`${chap4[i]} : méthode exacte avancée.`, "Diviser pour régner avec évaluation (borne).", "Si borne ≥ meilleure solution → couper la branche.", "Relaxation d'affectation donne une borne pour ATSP.", "Branch-and-Cut = état de l'art (Concorde)."] });
+    }
 
-    // === CHAPITRE 5 : Métäheuristiques (Slides 27 à 32) ===
-    const chap5 = ["Recuit simulé", "Recherche tabou", "Algorithmes génétiques", "Colonies de fourmis", "Plus proche voisin & 2-opt", "Comparaison méthodes"];
-    chap5.forEach((t,i) => slides.push({ title: `CHAPITRE 5 · Métäheuristiques · ${t}`, content: `<h2>${t}</h2><p>${getChap5(i)}</p><div class="code-block">if (newCost < currentCost || random() < exp(-delta/T)) accept();</div>` }));
+    // 48-50 : Application + QR + Fin
+    slides.push({ title: "TSP WORLD PRO", lines: ["Application web professionnelle d'optimisation TSP.", "Carte interactive Leaflet / OpenStreetMap.", "Algorithmes : Nearest Neighbor, 2-OPT, Held-Karp.", "Géolocalisation temps réel.", "Partage instantané par QR code."] });
 
-    // === CHAPITRE 6 : Application TSP WORLD PRO (Slides 33 à 40) ===
-    const appTopics = ["Architecture Fullstack", "Frontend Leaflet", "Algorithmes intégrés", "Génération QR codes", "Géolocalisation GPS", "Base de données", "API REST", "Performances"];
-    appTopics.forEach((t,i) => slides.push({ title: `CHAPITRE 6 · TSP WORLD PRO · ${t}`, content: `<h2>${t}</h2><p>${getAppContent(i)}</p>${i===3?'<div class="qr-grid"><div class="qr-card"><div id="qrApp1"></div><p>Lien application</p></div><div class="qr-card"><div id="qrGit1"></div><p>GitHub</p></div></div>':''}` }));
+    slides.push({ title: "ACCÈS RAPIDE", lines: ["Scannez le QR code pour accéder à l'application.", "Lien direct : https://prjet-sofien-iliass.vercel.app/", "Code source disponible sur GitHub.", "Documentation API complète.", "Démonstration interactive en ligne."], hasQr: true });
 
-    // === CHAPITRE 7 : Expérimentations (Slides 41 à 44) ===
-    for(let i=1;i<=4;i++) slides.push({ title: `CHAPITRE 7 · Résultats expérimentaux ${i}/4`, content: `<h2>Benchmarks TSPLIB</h2><p>${getExpContent(i)}</p><table><tr><th>Instance</th><th>Optimum</th><th>NN+2opt</th></tr><tr><td>Berlin52</td><td>7542</td><td>7681</td></tr><tr><td>Eil76</td><td>538</td><td>556</td></tr></table>` });
+    slides.push({ title: "REMERCIEMENTS", lines: ["Merci à notre encadrant Pr. EL HICHAMI Othmane.", "Merci à l'ENS Tétouan et à tous nos professeurs.", "Merci à nos familles pour leur soutien.", "Merci à vous pour votre attention.", "TSP WORLD PRO : l'optimisation à portée de main."] });
 
-    // === CONCLUSION (Slide 45) ===
-    slides.push({ title: "CONCLUSION & PERSPECTIVES", content: `<h2>Synthèse du travail</h2><p>Ce mémoire a exploré le TSP des fondements théoriques (calculabilité, NP-complétude) jusqu'à l'implémentation pratique TSP WORLD PRO.</p><div class="grid-2"><div class="stat-card"><i class="fas fa-check-circle"></i><h3>Acquis</h3><p>Held-Karp, Branch&Bound, heuristiques</p></div><div class="stat-card"><i class="fas fa-rocket"></i><h3>Perspectives</h3><p>TSP stochastique, deep learning, flottes mTSP</p></div></div><div class="badge">5000+ lignes de code structuré</div>` });
+    // Rendu
+    let currentSlide = 0;
+    const totalSlides = slides.length;
 
-    // === APPLICATION QR FINALE (Slide 46) ===
-    slides.push({ title: "ACCÈS RAPIDE · TSP WORLD PRO", content: `<h2>Scannez pour accéder à l'application</h2><div class="qr-grid"><div class="qr-card"><div id="qrFinalApp"></div><p><strong>🌐 Application Live</strong></p><small>prjet-sofien-iliass.vercel.app</small></div><div class="qr-card"><div id="qrFinalGit"></div><p><strong><i class="fab fa-github"></i> Code source</strong></p></div><div class="qr-card"><div id="qrFinalDoc"></div><p><strong>📄 Documentation PFE</strong></p></div></div><div style="text-align:center;margin-top:1rem"><a href="https://prjet-sofien-iliass.vercel.app/" target="_blank" style="color:#2c7da0;">https://prjet-sofien-iliass.vercel.app/</a></div><div class="code-block">// Exemple d'utilisation API\nfetch('/api/solve', {method:'POST',body:JSON.stringify(cities)}).then(r=>r.json());</div>` });
-
-    // === DÉMONSTRATION (Slide 47) ===
-    slides.push({ title: "DÉMONSTRATION", content: `<h2>Fonctionnalités clés</h2><ul style="margin-left:2rem"><li><i class="fas fa-map-marked-alt"></i> Carte interactive Leaflet</li><li><i class="fas fa-chart-line"></i> Nearest Neighbor, 2-OPT, Held-Karp</li><li><i class="fas fa-qrcode"></i> Partage instantané par QR</li><li><i class="fas fa-location-dot"></i> Géolocalisation temps réel</li><li><i class="fas fa-code"></i> API REST documentée</li></ul><div class="mock-map"><i class="fas fa-play-circle fa-2x"></i> Démo interactive disponible sur le lien</div>` });
-
-    // === REMERCIEMENTS (Slide 48) ===
-    slides.push({ title: "REMERCIEMENTS", content: `<div style="text-align:center;padding:1rem"><i class="fas fa-heart" style="font-size:2.5rem;color:#e67e22;"></i><h2>Merci pour votre attention</h2><p>Nous remercions profondément notre encadrant <strong>Pr. EL HICHAMI Othmane</strong>, l'équipe pédagogique de l'ENS Tétouan, nos familles et nos amis.</p><p>✨ TSP WORLD PRO : une solution innovante pour l'optimisation combinatoire.</p><footer>© 2026 Sofiane ER-RTHIMI & Ilyas ER-ROUFFI</footer></div>` });
-
-    // === SLIDES SUPPLÉMENTAIRES pour atteindre 50 (49 et 50) ===
-    slides.push({ title: "RÉFÉRENCES BIBLIOGRAPHIQUES", content: `<h2>Ouvrages et articles</h2><ul><li>Dantzig, Fulkerson & Johnson (1954) - Solution du TSP à 49 villes</li><li>Held & Karp (1962) - Programmation dynamique pour TSP</li><li>Cook, Levin (1971) - NP-complétude de SAT</li><li>Christofides (1976) - Algorithme d'approximation 3/2</li><li>TSPLIB - Benchmark instances</li></ul><div class="badge">Références scientifiques majeures</div>` });
-    slides.push({ title: "CONTACT & LIENS", content: `<div style="text-align:center;padding:1rem"><i class="fas fa-envelope fa-2x" style="color:#2c7da0;"></i><h2>Nous contacter</h2><p>sofiane.er-rthimi@etu.uae.ac.ma<br>ilyas.er-rouffi@etu.uae.ac.ma</p><div class="qr-grid"><div class="qr-card"><div id="qrContact"></div><p>Lien projet</p></div></div><footer>ENS Tétouan · Licence Mathématiques · 2025-2026</footer></div>` });
-
-    // Helper content functions
-    function getChap1(i) { return ["La machine de Turing (1936) formalise la notion d'algorithme avec un ruban infini et des états. Le TSP est décidable car l'espace des solutions est fini.","Le problème de l'arrêt HALT = {⟨M,w⟩ | M s'arrête sur w} est indécidable (preuve par diagonalisation).","Thèse de Church-Turing : tout ce qui est effectivement calculable est calculable par une machine de Turing.","Un langage est décidable si une MT s'arrête toujours avec la bonne réponse.","Le théorème de Rice : toute propriété non triviale du langage d'une MT est indécidable.","Le TSP est décidable car le nombre de tournées est fini, mais sa complexité est exponentielle."][i]; }
-    function getChap2(i) { return ["P : problèmes résolus en temps polynomial (O(n^k)).","NP : problèmes vérifiables en temps polynomial (certificat).","Un certificat pour TSP : une tournée vérifiée en O(n).","P ⊆ NP trivialement.","Cook-Levin : SAT est NP-complet, premier problème de cette classe.","TSP décisionnel est NP-complet (réduction depuis cycle hamiltonien)."][i]; }
-    function getChap3(i) { return ["Bellman 1957 : toute politique optimale contient des sous-politiques optimales.","Held-Karp (1962) : O(n²·2ⁿ) pour TSP exact.","dp[S][j] = min_{i∈S\{j}}(dp[S\{j}][i] + d(i,j)).","Complexité exponentielle mais bien meilleure que n! (gain énorme).","Table de 2ⁿ × n états, mémoire O(n·2ⁿ).","Pour n=20 : Held-Karp ~0.3s, force brute ~2e15 ans."][i]; }
-    function getChap4(i) { return ["Branch & Bound = diviser pour régner avec évaluation (borne).","Si borne_inf ≥ meilleure_solution, on coupe la branche (élagage).","Relaxation du problème d'affectation donne une borne pour ATSP.","Parcours en profondeur (DFS) ou meilleure borne d'abord (BFS).","Branch-and-Cut ajoute des contraintes de coupe (inégalités de sous-tours).","Concorde : solveur TSP état de l'art (85000 villes)."][i]; }
-    function getChap5(i) { return ["Recuit simulé : accepte solutions moins bonnes avec probabilité e^{-Δ/T}.","Recherche tabou : mémoire des mouvements interdits (liste tabou).","Algorithmes génétiques : croisement (OX, PMX) et mutation.","Colonies de fourmis : dépôt de phéromone sur les arêtes.","Plus proche voisin (constructif O(n²)) et 2-opt (amélioration locale).","Métäheuristiques : compromis qualité/temps pour grandes instances."][i]; }
-    function getAppContent(i) { return ["Architecture MVC fullstack (HTML/CSS/JS + Node.js).","Cartographie Leaflet avec clusters et géolocalisation.","NN, 2-OPT, Held-Karp (exact pour n≤18).","QR codes pour partage instantané de tournées.","Navigator.geolocation pour ajouter la position actuelle.","Stockage PostgreSQL/JSON des villes.","API REST : /api/solve, /api/cities.","Temps réponse < 100ms pour 50 villes."][i]; }
-    function getExpContent(i) { return ["Tests sur instances TSPLIB (berlin52, eil76, pr144).","Comparaison NN vs Held-Karp pour n=15 à 25.","Qualité NN + 2opt ~ 96% de l'optimum.","Mémoire DP limite n≤25, Branch&Bound résout n=50 en minutes."][i-1]; }
-
-    // Render
-    let current = 0;
-    const total = slides.length;
-    function render() {
+    function renderSlides() {
         const wrapper = document.getElementById('slidesWrapper');
         wrapper.innerHTML = '';
-        slides.forEach((s, idx) => {
+        slides.forEach((slide, idx) => {
             const div = document.createElement('div');
             div.className = 'slide';
             if (idx === 0) div.classList.add('active');
-            div.innerHTML = `<div class="slide-content"><div class="slide-header"><div class="slide-title">${s.title}</div><div class="slide-number">Slide ${idx+1}/${total}</div></div>${s.content}</div>`;
+            let content = `<div class="slide-content">
+                            <div class="slide-header">
+                                <div class="slide-title">${slide.title}</div>
+                                <div class="slide-number">Slide ${idx+1} / ${totalSlides}</div>
+                            </div>`;
+            for (let line of slide.lines) {
+                content += `<p>${line}</p>`;
+            }
+            if (slide.hasQr) {
+                content += `<div class="qr-grid">
+                                <div class="qr-card"><div id="qrAppFinal"></div><p>🌐 TSP WORLD PRO</p></div>
+                                <div class="qr-card"><div id="qrGitFinal"></div><p>🐙 GitHub</p></div>
+                            </div>
+                            <div class="mock-map"><i class="fas fa-globe"></i> <a href="https://prjet-sofien-iliass.vercel.app/" target="_blank" style="color:#1e3c4c;">https://prjet-sofien-iliass.vercel.app/</a></div>`;
+            }
+            content += `<footer>Optimisation Combinatoire · ENS Tétouan 2025-2026</footer></div>`;
+            div.innerHTML = content;
             wrapper.appendChild(div);
         });
         updateNav();
         generateAllQRCodes();
     }
+
     function updateNav() {
-        document.querySelectorAll('.slide').forEach((s, i) => { if (i === current) s.classList.add('active'); else s.classList.remove('active'); });
-        document.getElementById('slideCounter').innerText = `Slide ${current+1} / ${total}`;
-        document.getElementById('progressBar').style.width = `${((current+1)/total)*100}%`;
+        const allSlides = document.querySelectorAll('.slide');
+        allSlides.forEach((s, i) => {
+            if (i === currentSlide) s.classList.add('active');
+            else s.classList.remove('active');
+        });
+        document.getElementById('slideCounter').innerText = `Slide ${currentSlide+1} / ${totalSlides}`;
+        const progress = ((currentSlide+1) / totalSlides) * 100;
+        document.getElementById('progressBar').style.width = `${progress}%`;
     }
+
     function generateAllQRCodes() {
-        const ids = ['qrApp1','qrGit1','qrFinalApp','qrFinalGit','qrFinalDoc','qrContact'];
-        ids.forEach(id => { if(document.getElementById(id)) generateQR(id, 'https://prjet-sofien-iliass.vercel.app/'); });
-        if(document.getElementById('qrGit1')) generateQR('qrGit1', 'https://github.com/sofiane-iliass/tsp-world-pro');
-        if(document.getElementById('qrFinalGit')) generateQR('qrFinalGit', 'https://github.com/sofiane-iliass/tsp-world-pro');
-        if(document.getElementById('qrFinalDoc')) generateQR('qrFinalDoc', 'https://prjet-sofien-iliass.vercel.app/presentation');
-        if(document.getElementById('qrContact')) generateQR('qrContact', 'https://prjet-sofien-iliass.vercel.app/');
+        if (document.getElementById('qrAppFinal')) generateQR('qrAppFinal', 'https://prjet-sofien-iliass.vercel.app/');
+        if (document.getElementById('qrGitFinal')) generateQR('qrGitFinal', 'https://github.com/sofiane-iliass/tsp-world-pro');
     }
-    function next() { if (current < total-1) { current++; updateNav(); } }
-    function prev() { if (current > 0) { current--; updateNav(); } }
-    document.getElementById('nextBtn').addEventListener('click', next);
-    document.getElementById('prevBtn').addEventListener('click', prev);
-    document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') next(); if (e.key === 'ArrowLeft') prev(); });
-    render();
+
+    function nextSlide() { if (currentSlide < totalSlides-1) { currentSlide++; updateNav(); } }
+    function prevSlide() { if (currentSlide > 0) { currentSlide--; updateNav(); } }
+
+    document.getElementById('nextBtn').addEventListener('click', nextSlide);
+    document.getElementById('prevBtn').addEventListener('click', prevSlide);
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') nextSlide();
+        if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    renderSlides();
 </script>
 </body>
 </html>
